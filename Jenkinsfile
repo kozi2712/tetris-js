@@ -2,13 +2,23 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Clone Repository') {
             steps {
-                checkout([$class: 'GitSCM', 
-                    branches: [[name: '*/master']], 
-                    userRemoteConfigs: [[url: 'https://github.com/kozi2712/tetris-js']]])
+                script {
+                  sh 'docker volume prune -f'
+                  git 'https://https://github.com/kozi2712/tetris-js.git'
+                  sh 'git pull origin'
+                  echo 'The repository was successfully cloned.'
+                }
             }
         }
+      stage('Install Dependencies'){
+        steps {
+                nodejs('Node20'){
+                    echo 'Clean cache'
+                }
+            }
+      }
         stage('Build') {
             steps {
                 nodejs('Node20'){
