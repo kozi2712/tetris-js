@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Run tests') {
             steps {
-                sh 'docker build -t doc-test/dockerfile-test .'
+                sh 'docker build -t doc-test -f dockerfile-test .'
             }
         }
     }
