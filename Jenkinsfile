@@ -7,7 +7,6 @@ pipeline {
                 script {
                   sh 'docker volume prune -f'
                   git 'https://https://github.com/kozi2712/tetris-js.git'
-                  sh 'git pull origin'
                   echo 'The repository was successfully cloned.'
                 }
             }
