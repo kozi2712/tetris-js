@@ -2,13 +2,11 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone Repository') {
+        stage('Checkout') {
             steps {
-                script {
-                  sh 'docker volume prune -f'
-                  git 'https://https://github.com/kozi2712/tetris-js.git'
-                  echo 'The repository was successfully cloned.'
-                }
+                checkout([$class: 'GitSCM', 
+                    branches: [[name: '*/main']], 
+                    userRemoteConfigs: [[url: 'https://github.com/kozi2712/tdd-mooc-tetris']]])
             }
         }
       stage('Install Dependencies'){
@@ -29,9 +27,7 @@ pipeline {
         }
         stage('Run tests') {
             steps {
-                nodejs('Node20'){
-                sh 'yarn test'
-                }
+                sh 'docker build -t Dockerfile-test .'
             }
         }
     }
