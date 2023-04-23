@@ -6,7 +6,7 @@ pipeline {
             steps {
                 checkout([$class: 'GitSCM', 
                     branches: [[name: '*/main']], 
-                    userRemoteConfigs: [[url: 'https://github.com/kozi2712/tdd-mooc-tetris']]])
+                    userRemoteConfigs: [[url: 'https://github.com/kozi2712/tetris-js']]])
             }
         }
       stage('Install Dependencies'){
