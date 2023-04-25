@@ -12,6 +12,7 @@ pipeline {
       stage('Install Dependencies'){
         steps {
                 nodejs('Node20'){
+                    sh 'docker rmi -f doc-dep || true'
                     echo 'Clean cache'
                     sh 'docker build -t doc-dep:latest -f dockerfile-dep .'
                 }
@@ -20,6 +21,7 @@ pipeline {
         stage('Build') {
             steps {
                 nodejs('Node20'){
+                    sh 'docker rmi -f doc-build || true'
                     sh 'docker volume create ent_vol'
                     sh 'docker build -t doc-build:latest -f dockerfile-build .'
                     sh 'docker run --mount type=volume,src="ent_vol",dst=/tetris_v1/deploy doc-build:latest bash -c "ls -l && cd .. && cp -r /tetris-js /tetris_v1/deploy"'
@@ -28,12 +30,13 @@ pipeline {
         }
         stage('Run tests') {
             steps {
+                sh 'docker rmi -f doc-test || true'
                 sh 'docker build -t doc-test -f dockerfile-test .'
             }
         }
       stage('Deploy') {
             steps {
-                //sh 'docker rm -f doc-deploy || true'
+                sh 'docker rm -f doc-deploy || true'
 		            sh 'docker run -dit --name doc-deploy --mount type=volume,src="ent_vol",dst=/dest node:latest'
                 sh 'docker container exec doc-deploy sh -c "ls -l && cd dest && ls -l && cd tetris-js && ls -l"'
                 sh 'docker container exec doc-deploy sh -c "cd dest/tetris-js && ls -l && yarn start"'
