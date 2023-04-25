@@ -1,4 +1,4 @@
 # syntax=docker/dockerfile:1 
-FROM dockerfile-dep:latest
+FROM doc-dep:latest
 
 RUN yarn run build
