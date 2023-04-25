@@ -27,7 +27,6 @@ pipeline {
         stage('Run tests') {
             steps {
                 sh 'docker build -t doc-test -f dockerfile-test .'
-                sh 'docker run'
             }
         }
     }
