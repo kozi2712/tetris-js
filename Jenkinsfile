@@ -74,10 +74,10 @@ pipeline {
                   sh "docker tag doc-publish:latest jankoz/tetris-js:${params.VERSION}"
                   sh "docker push jankoz/tetris-js:${params.VERSION}"
                 }
-              }
-              else{
+                else{
                 sh 'echo "bad publish"'
-              }
+                }
+              }       
             }
           }
         }
