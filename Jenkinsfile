@@ -65,7 +65,7 @@ pipeline {
                   sh 'docker build --no-cache -t doc-publish:latest . -f dockerfile-publish'
                   sh "docker run -dit --name doc-pub doc-publish:latest"
                   sh 'docker container exec doc-pub sh -c "ls -l && cd .. && ls -l && cd .. && ls -l"'
-                  sh "docker cp doc-pub:/tetris-js/tetris-js-1.0.0.tgz ./${params.VERSION}"
+                  sh "docker cp doc-pub:/tetris-js/tetris-js-0.1.0.tgz ./${params.VERSION}"
 
 
                   withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pswd', usernameVariable: 'user')]) {
