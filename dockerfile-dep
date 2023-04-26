@@ -3,4 +3,3 @@ FROM node:latest
 RUN git clone https://github.com/kozi2712/tetris-js.git
 WORKDIR tetris-js
 RUN yarn install
-RUN yarn add react-scripts@5
