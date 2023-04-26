@@ -24,8 +24,6 @@ pipeline {
                     sh 'docker rmi -f doc-dep || true'
                     echo 'Clean cache'
                     sh 'docker build -t doc-dep:latest -f dockerfile-dep .'
-                    sh 'rm build_logs.txt'
-                    sh 'rm test_logs.txt'
                     sh 'touch build_logs.txt'
                     sh 'touch test_logs.txt'
                 }
