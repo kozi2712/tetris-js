@@ -34,7 +34,7 @@ pipeline {
                 nodejs('Node20'){
                     sh 'docker rmi -f doc-build || true'
                     sh 'docker volume create ent_vol'
-                    sh 'docker build -t doc-build:latest . -f dockerfile-build> build_logs.txt'
+                    sh 'docker build -t doc-build:latest . -f dockerfile-build> ./build_logs.txt'
                     sh 'docker run --mount type=volume,src="ent_vol",dst=/tetris_v1/deploy doc-build:latest bash -c "ls -l && cd .. && cp -r /tetris-js /tetris_v1/deploy"'
                 }
             }
@@ -42,7 +42,7 @@ pipeline {
         stage('Run tests') {
             steps {
                 sh 'docker rmi -f doc-test || true'
-                sh 'docker build -t doc-test . -f dockerfile-test> test_logs.txt'
+                sh 'docker build -t doc-test . -f dockerfile-test> ./test_logs.txt'
             }
         }
       stage('Deploy') {
